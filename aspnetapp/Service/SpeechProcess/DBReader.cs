@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Service.SpeechProcess
+﻿namespace Service.SpeechProcess
 {
     public class DBReader
     {
@@ -13,7 +7,7 @@ namespace Service.SpeechProcess
             var silenceDict = new Dictionary<int, double>();
             using (NAudio.Wave.WaveFileReader wave = new NAudio.Wave.WaveFileReader(filePath))
             {
-                var samplesPerSecond = wave.WaveFormat.SampleRate * wave.WaveFormat.Channels/10;
+                var samplesPerSecond = wave.WaveFormat.SampleRate * wave.WaveFormat.Channels / 10;
                 var bytesPerSecond = samplesPerSecond * 2;
                 var readBuffer = new byte[bytesPerSecond];
                 int samplesRead;
@@ -23,21 +17,22 @@ namespace Service.SpeechProcess
                     samplesRead = wave.Read(readBuffer, 0, bytesPerSecond);
                     if (samplesRead == 0) break;
                     double avg = 0;
-                    for(int j=0; j < samplesPerSecond; j++)
+                    for (int j = 0; j < samplesPerSecond; j++)
                     {
-                        avg += BitConverter.ToInt16(readBuffer,2*j) * 1.0 / samplesPerSecond;
+                        avg += BitConverter.ToInt16(readBuffer, 2 * j) * 1.0 / samplesPerSecond;
                     }
-                        silenceDict.Add(i,Math.Abs(avg));
+
+                    silenceDict.Add(i, Math.Abs(avg));
                     i++;
                 } while (samplesRead > 0);
             }
-            return silenceDict;
 
+            return silenceDict;
         }
+
         private int bytArray2Int(byte[] bytArray)
         {
             return bytArray[0] | (bytArray[1] << 8);
         }
-
     }
 }

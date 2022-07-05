@@ -1,17 +1,13 @@
-﻿using System.Net;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using System.Web;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
-namespace Service.SpeechProcess;
-
-using System;
-using System.Threading.Tasks;
-using TencentCloud.Common;
-using TencentCloud.Common.Profile;
 using TencentCloud.Asr.V20190614;
 using TencentCloud.Asr.V20190614.Models;
+using TencentCloud.Common;
+using TencentCloud.Common.Profile;
+
+namespace Service.SpeechProcess;
 
 public class ASR
 {
@@ -41,7 +37,7 @@ public class ASR
         req.UsrAudioKey = usrAudioKey; // 用户端对此任务的唯一标识，用户自助生成，用于用户查找识别结果。
         req.FilterPunc = 2; // 是否过滤标点符号。 0：不过滤，1：过滤句末标点，2：过滤所有标点。
         SentenceRecognitionResponse resp = client.SentenceRecognitionSync(req);
-        
+
         return AbstractModel.ToJsonString(resp);
     }
 
@@ -54,6 +50,7 @@ public class ASR
         {
             speech = jo["Result"].ToString();
         }
+
         return speech;
     }
 

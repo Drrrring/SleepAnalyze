@@ -7,6 +7,6 @@ public class Config
 	 */
 
     public static readonly string SECRET_ID = Environment.GetEnvironmentVariable("SECRET_ID");
-	
+
     public static readonly string SECRET_KEY = Environment.GetEnvironmentVariable("SECRET_KEY");
 }
