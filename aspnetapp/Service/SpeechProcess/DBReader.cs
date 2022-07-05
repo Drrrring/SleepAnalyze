@@ -1,11 +1,13 @@
-﻿namespace Service.SpeechProcess
+﻿using NAudio.Wave;
+
+namespace Service.SpeechProcess
 {
     public class DBReader
     {
         public Dictionary<int, double> readDB(string filePath)
         {
             var silenceDict = new Dictionary<int, double>();
-            using (NAudio.Wave.WaveFileReader wave = new NAudio.Wave.WaveFileReader(filePath))
+            using (WaveFileReader wave = new WaveFileReader(filePath))
             {
                 var samplesPerSecond = wave.WaveFormat.SampleRate * wave.WaveFormat.Channels / 10;
                 var bytesPerSecond = samplesPerSecond * 2;
